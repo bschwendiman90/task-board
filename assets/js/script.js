@@ -83,25 +83,46 @@ function renderTaskList() {
 
 // Todo: create a function to handle adding a new task
 function handleAddTask(event){
+$('#addTaskBtn').on('click', function(event){
+    $('taskModal').modal('show');
+});
+$('#taskModal').on('click', '#addTaskSubmitBtn', function(event){
+    event.preventDefault();
 
+    const taskTitle = $('#task-title').val();
+    const taskDueDate = $('#task-due-date').val();
+    const taskDescription = $('#task-description').val();
+
+    const newTask = {
+        id: crypto.randomUUID(),
+        title: taskTitle,
+        dueDate: taskDueDate,
+        description: taskDescription,
+        status:'to-do',
+    }
+
+    console.log(newTask);
+
+    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    tasks.push(newTask);
+
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+
+    renderTaskList();
+
+    $('#task-title').val('');
+    $('#task-due-date').val('');
+    $('#task-description').val('');
+    
+    $('#taskModal').modal('hide');
+})
 }
 
 
 
 // Todo: create a function to handle deleting a task
 function handleDeleteTask(){
-    const taskId = $(this).attr('data-project-id');
-    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
-    tasks.forEach((task) => {
-        if (task.id === taskId) {
-          tasks.splice(tasks.indexOf(task), 1);
-        }
-      });
-
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-
-    renderTaskList();
 }
 
 // Todo: create a function to handle dropping a task into a new status lane
