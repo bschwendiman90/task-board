@@ -13,7 +13,7 @@ When clicking the add task button on the homepage a modal window is displayed as
 ![modal-form](https://github.com/bschwendiman90/task-board/assets/146499394/abc74fe0-b465-432b-97eb-9f100b300bdf)
 
     ```
-https://bschwendiman90.github.io/thought-canvas-personal-blog/
+https://bschwendiman90.github.io/task-board/
 
 ## License
 
