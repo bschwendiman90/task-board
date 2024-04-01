@@ -122,27 +122,38 @@ $('#taskModal').on('click', '#addTaskSubmitBtn', function(event){
 
 // Todo: create a function to handle deleting a task
 function handleDeleteTask(){
+    const taskId = $(this).attr('data-project-id');
+    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
+    tasks.forEach((task) => {
+        if (task.id === taskId) {
+          tasks.splice(tasks.indexOf(task), 1);
+        }
+      });
+
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+
+    renderTaskList();
 }
 
 // Todo: create a function to handle dropping a task into a new status lane
 function handleDrop(event, ui) {
-  // ? Read projects from localStorage
+  
   let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
-  // ? Get the project id from the event
+  
   const taskId = ui.draggable.attr('data-project-id');
 
-  // ? Get the id of the lane that the card was dropped into
+  
   const newStatus = event.target.id;
 
   for (let task of tasks) {
-    // ? Find the project card by the `id` and update the project status.
+    
     if (task.id === taskId) {
       task.status = newStatus;
     }
   }
-  // ? Save the updated projects array to localStorage (overwritting the previous one) and render the new project data to the screen.
+  
   localStorage.setItem('tasks', JSON.stringify(tasks));
  renderTaskList();
 }
